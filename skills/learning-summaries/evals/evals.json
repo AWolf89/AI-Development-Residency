@@ -1,0 +1,78 @@
+{
+  "skill_name": "learning-summaries",
+  "version": "0.1.0",
+  "output_quality_evals": [
+    {
+      "id": 1,
+      "name": "offer-after-substantial-learning",
+      "prompt": "[End of a long conversation explaining Notion databases vs tables and tag drift] ok that makes sense, thanks",
+      "expected_output": "Answer completed first, then a one-line description of what would be summarized and a tappable Create summary / Skip choice. No summary written before the tap.",
+      "files": []
+    },
+    {
+      "id": 2,
+      "name": "no-offer-after-trivial-exchange",
+      "prompt": "what's the keyboard shortcut to comment out a line in vs code",
+      "expected_output": "Answer only. No summary offer. Offering after trivial exchanges is the primary over-trigger failure.",
+      "files": []
+    },
+    {
+      "id": 3,
+      "name": "tap-pushes-immediately-with-link",
+      "prompt": "[User taps Create summary after a deep session that built a script]",
+      "expected_output": "Deep-tier summary pushed without a second confirmation. Reply is a single line with the Notion page URL, no recap. Name is specific and searchable.",
+      "files": []
+    },
+    {
+      "id": 4,
+      "name": "depth-scales-down",
+      "prompt": "[User taps Create summary after a short conversation explaining one concept]",
+      "expected_output": "Light tier only: one-sentence summary, a few key concepts, takeaways. No empty Code or Mental model sections, no padding.",
+      "files": []
+    },
+    {
+      "id": 5,
+      "name": "tags-reuse-existing",
+      "prompt": "[Database already has tags API, Git, Notion. Session covered REST APIs and GitHub]",
+      "expected_output": "Existing tags read first and matcher run. 'API' reused rather than creating 'APIs' or 'REST APIs'. 2-5 tags total.",
+      "files": []
+    },
+    {
+      "id": 6,
+      "name": "duplicate-session-updates-not-creates",
+      "prompt": "[Summary already pushed for this session; user taps Create summary again]",
+      "expected_output": "Duplicate detected, existing page updated, reply says it was updated. Exactly one row remains.",
+      "files": []
+    },
+    {
+      "id": 7,
+      "name": "missing-database-asks-before-creating",
+      "prompt": "[Lesson Summaries page exists but contains no database] Create summary",
+      "expected_output": "Stops and asks before creating the database. Does not treat the summary tap as approval for a schema change. Summary offered inline meanwhile.",
+      "files": []
+    },
+    {
+      "id": 8,
+      "name": "push-failure-never-claims-success",
+      "prompt": "[Notion connector returns an authorization error on create]",
+      "expected_output": "Failure reported plainly with the reason; summary given inline so nothing is lost. No success message without a returned URL.",
+      "files": []
+    }
+  ],
+  "trigger_evals": [
+    {"query": "ok i think i finally get how rebasing works now, thanks for walking me through that", "should_trigger": true},
+    {"query": "summarize what we learned today and save it to my notion", "should_trigger": true},
+    {"query": "add this to my lesson summaries", "should_trigger": true},
+    {"query": "that was a lot - can you create a summary of everything we covered on docker networking", "should_trigger": true},
+    {"query": "Create summary", "should_trigger": true},
+    {"query": "great, that explains why my venv wasn't working. i've learned a ton about python environments", "should_trigger": true},
+    {"query": "what's 18% tip on $64", "should_trigger": false},
+    {"query": "summarize this PDF report for me", "should_trigger": false},
+    {"query": "write up the meeting notes from the transcript I pasted", "should_trigger": false},
+    {"query": "I need to write my coding challenge summary for the residency, it has to be my own words", "should_trigger": false},
+    {"query": "don't save anything from this chat, just help me debug", "should_trigger": false},
+    {"query": "create a new page in notion for my grocery list", "should_trigger": false},
+    {"query": "what's the difference between a list and a tuple", "should_trigger": false}
+  ],
+  "notes": "Over-trigger guards are #2 (trivial exchange) and the negatives covering document summaries, meeting notes, and generic Notion writes, which share vocabulary ('summarize', 'Notion', 'page'). The course-submission negative is deliberate: a summary that must be the user's own work must never be AI-drafted. Note that triggering at the END of a conversation is state-based and partly outside what the description can catch; reliability depends on the companion user preference, not on this description alone."
+}

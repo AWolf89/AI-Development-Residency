@@ -71,7 +71,11 @@ def audit(d: Path) -> list[tuple[str, str, str]]:
             f.append((MUST, "description", "no exclusions ('Do NOT use for…')"))
         if re.search(r"\b(helps? with|assists? with)\b", desc, re.I):
             f.append((MUST, "description", "vague phrasing ('helps with')"))
-        if re.search(r"\b(I|me|my|you|your)\b", desc):
+        # The checklist requires both third person AND real user phrasings, and real
+        # phrasings are often first person ("add this to my notes"). Quoted text is the
+        # user's voice, not the description's, so it is excluded from this check.
+        unquoted = re.sub(r"\"[^\"]*\"|“[^”]*”", "", desc)
+        if re.search(r"\b(I|me|my|you|your)\b", unquoted):
             f.append((MUST, "description", "not written in third person"))
 
     # §2 progressive disclosure
