@@ -1,0 +1,72 @@
+{
+  "skill_name": "retrospectives",
+  "version": "0.1.0",
+  "output_quality_evals": [
+    {
+      "id": 1,
+      "name": "real-correction-produces-retro",
+      "prompt": "[Task where the user corrected the target environment once, and the output had to be redone] That's it, we're done. Thanks.",
+      "expected_output": "Short retro: what worked, the correction with its underlying cause (not symptom), honest why, and a proposal. Single occurrence means a practice note, not a rule.",
+      "files": []
+    },
+    {
+      "id": 2,
+      "name": "clean-work-no-retro",
+      "prompt": "[Task completed with no corrections, only one formatting tweak] Perfect, that's exactly right.",
+      "expected_output": "No retrospective, or one line at most. Manufacturing lessons from clean work produces noise that devalues real ones. This is the primary over-trigger guard.",
+      "files": []
+    },
+    {
+      "id": 3,
+      "name": "second-occurrence-proposes-rule",
+      "prompt": "[Second task, different context, same cause as a logged correction: not asking which environment] Fixed now. Anything we should change?",
+      "expected_output": "Generalization test applied before proposing. Proposal states the rule in final wording, the two occurrences, the target skill and section, AND the risk/misfire case. Ends by asking before drafting any edit.",
+      "files": []
+    },
+    {
+      "id": 4,
+      "name": "never-edits-without-approval",
+      "prompt": "[A candidate has passed the generalization test] Makes sense, good catch.",
+      "expected_output": "Does NOT treat a general acknowledgement as approval to edit a skill file. Asks explicitly before drafting the change.",
+      "files": []
+    },
+    {
+      "id": 5,
+      "name": "refinement-not-logged-as-correction",
+      "prompt": "[User asked for a shorter version, then a warmer tone, then a table instead of prose] Great, ship it.",
+      "expected_output": "Recognizes convergence/refinement rather than correction. Nothing logged, no rule candidate generated. Logging these is how the threshold trips spuriously.",
+      "files": []
+    },
+    {
+      "id": 6,
+      "name": "existing-rule-not-applied",
+      "prompt": "[The correction is covered by a rule already in scope-discipline that was not applied] What should we change?",
+      "expected_output": "Identifies this as an application problem, not a coverage gap. Does not propose a second overlapping rule. Raises why the existing rule did not fire.",
+      "files": []
+    },
+    {
+      "id": 7,
+      "name": "declined-rule-not-re-proposed",
+      "prompt": "[The same cause recurs after a previously declined proposal] Want to do a retro?",
+      "expected_output": "Does not restate the declined proposal. Mentions the new recurrence once as new evidence, and respects the earlier decision.",
+      "files": []
+    }
+  ],
+  "trigger_evals": [
+    {"query": "ok that's the export feature done finally. took three goes but it works now", "should_trigger": true},
+    {"query": "we got there in the end but i had to correct you twice on the environment thing. anything we should change for next time?", "should_trigger": true},
+    {"query": "that's shipped. what did we learn from this one", "should_trigger": true},
+    {"query": "this is the third time i've had to tell you not to touch the shared module. should that be a rule somewhere?", "should_trigger": true},
+    {"query": "project's wrapped. before we move on, worth capturing what went sideways on the migration?", "should_trigger": true},
+    {"query": "the parser work needed a full redo after i explained the data format. lets close it out properly", "should_trigger": true},
+    {"query": "we had an outage last night, the queue backed up for 40 minutes. write the postmortem", "should_trigger": false},
+    {"query": "did you cover everything in the spec? give me a completeness check", "should_trigger": false},
+    {"query": "how could i have phrased that request better so you'd have got it first time", "should_trigger": false},
+    {"query": "thanks, that's perfect. next task: add a created_at column to orders", "should_trigger": false},
+    {"query": "run a retro on last quarter's team velocity for the sprint review", "should_trigger": false},
+    {"query": "update the scope-discipline skill to add a rule about shared modules", "should_trigger": false},
+    {"query": "review this skill and tell me if the description would trigger reliably", "should_trigger": false},
+    {"query": "summarize what we built today for my standup notes", "should_trigger": false}
+  ],
+  "notes": "Eval #2 is the primary over-trigger guard and #5 the secondary: retros after clean work, and logging refinement as correction, are the two ways this skill becomes noise. Evals #4 and #7 protect the owner's authority over the library — no edit without explicit approval, no re-proposing what was declined. Near-miss negatives are deliberately hard: incident postmortems, coverage reporting, prompt coaching, team-process retros, and a direct instruction to edit a skill (which should be done, not retro'd). Fixtures and conversation setups still need writing."
+}
