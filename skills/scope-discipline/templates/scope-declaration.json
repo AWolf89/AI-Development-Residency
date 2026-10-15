@@ -1,0 +1,35 @@
+{
+  "task": "One line describing what was asked, in the requester's terms",
+  "declared_at": "YYYY-MM-DD",
+  "in_scope": [
+    "src/export/csv.py",
+    "tests/export/test_csv.py"
+  ],
+  "in_scope_globs": [
+    "src/export/*.py"
+  ],
+  "explicitly_out_of_scope": [
+    "src/export/base.py — shared by four callers, changes need their own review",
+    "dependencies and lockfiles",
+    "CI and formatter configuration"
+  ],
+  "allow_dependency_changes": false,
+  "allow_config_changes": false,
+  "widened": [
+    {
+      "path": "src/export/base.py",
+      "reason": "CSV writer needs a new hook; agreed with requester",
+      "agreed_by": "name",
+      "agreed_at": "YYYY-MM-DD"
+    }
+  ],
+  "observations": [
+    {
+      "what": "build_xlsx() swallows exceptions and returns an empty file",
+      "where": "src/export/xlsx.py:88",
+      "why_it_matters": "Silent data loss — users get a valid-looking empty export",
+      "rough_fix": "Propagate the error and surface it in the UI; ~half a day with tests",
+      "raised_immediately": false
+    }
+  ]
+}

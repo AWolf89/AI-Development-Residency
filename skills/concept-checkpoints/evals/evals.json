@@ -1,0 +1,56 @@
+{
+  "skill_name": "concept-checkpoints",
+  "version": "0.1.0",
+  "output_quality_evals": [
+    {
+      "id": 1,
+      "name": "load-bearing-concept-checkpointed",
+      "prompt": "I need the invoice edit page to not lose changes when two people have it open. Can you build that?",
+      "expected_output": "Checkpoint on optimistic vs pessimistic locking before implementing, using the offer or decision form. Names the failure mode in concrete terms. Does not lecture or quiz.",
+      "files": []
+    },
+    {
+      "id": 2,
+      "name": "demonstrated-fluency-no-checkpoint",
+      "prompt": "Use optimistic locking with a version column here - we already do that in the orders table and it works fine, just watch out for the retry storm on the bulk endpoint.",
+      "expected_output": "No checkpoint on locking. User demonstrated fluency by naming the mechanism, the precedent, and the failure mode. Over-explaining here is the failure.",
+      "files": []
+    },
+    {
+      "id": 3,
+      "name": "time-pressure-respected",
+      "prompt": "Demo in 20 minutes and the export is broken. Just fix it, I'll read up on it later.",
+      "expected_output": "No interrupting checkpoint. Fix delivered. At most a one-line flag at handover with an open offer for later.",
+      "files": []
+    },
+    {
+      "id": 4,
+      "name": "confident-vocabulary-shaky-model",
+      "prompt": "Add caching to the dashboard queries. It should use Redis and always show current data, obviously.",
+      "expected_output": "Notices the contradiction (always-fresh cache) without condescension. Addresses it via the decision rather than by testing the user on definitions.",
+      "files": []
+    },
+    {
+      "id": 5,
+      "name": "no-repeat-checkpoint",
+      "prompt": "[Second task in a session where idempotency keys were already explained] Now add the same protection to the refund endpoint.",
+      "expected_output": "References the earlier explanation rather than repeating it. Re-explaining reads as not listening.",
+      "files": []
+    }
+  ],
+  "trigger_evals": [
+    {"query": "build the invoice edit page so two people editing at once don't clobber each other. i've never dealt with this kind of thing before", "should_trigger": true},
+    {"query": "can you add websockets to this? i'll be the one maintaining it so i want to actually understand what you're doing", "should_trigger": true},
+    {"query": "set up the auth flow with refresh tokens. i'm a frontend dev, backend security stuff isn't really my area", "should_trigger": true},
+    {"query": "walk me through building this queue consumer - i want to learn this properly not just paste it", "should_trigger": true},
+    {"query": "add database indexes to speed up the reports page. not sure what that actually does under the hood tbh", "should_trigger": true},
+    {"query": "explain how OAuth2 works, I'm studying for an interview", "should_trigger": false},
+    {"query": "implement the standard PKCE flow, we use it on three other services already, same pattern as the mobile app", "should_trigger": false},
+    {"query": "just give me the regex, no explanation needed", "should_trigger": false},
+    {"query": "production is down and the queue is backing up, fix it now", "should_trigger": false},
+    {"query": "write me a tutorial on react hooks for our junior devs", "should_trigger": false},
+    {"query": "what's the difference between a mutex and a semaphore?", "should_trigger": false},
+    {"query": "review my implementation of the retry logic and tell me what's wrong with it", "should_trigger": false}
+  ],
+  "notes": "Output evals #2 and #3 are the over-trigger guards and matter as much as #1 — a checkpoint aimed at someone fluent or someone in a hurry is worse than none, because it trains the user to route around the practice. Negatives emphasize standalone teaching requests (no artifact being built) and demonstrated fluency, both of which share vocabulary with the trigger cases."
+}

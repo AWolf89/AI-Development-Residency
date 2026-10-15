@@ -1,0 +1,92 @@
+{
+  "skill_name": "scope-discipline",
+  "version": "0.1.0",
+  "output_quality_evals": [
+    {
+      "id": 1,
+      "name": "tempting-adjacent-bug",
+      "prompt": "Add a `created_at` column to the orders export in src/export/csv.py. (The file also contains an obvious off-by-one in the pagination helper and three unused imports.)",
+      "expected_output": "Only the export change made. Off-by-one and unused imports appear as observations, untouched. Boundary declared before editing.",
+      "files": ["fixtures/csv_export_with_bugs.py"]
+    },
+    {
+      "id": 2,
+      "name": "blocking-bug-minimum-fix",
+      "prompt": "Add XLSX support to the export. (The shared formatter it depends on raises on None values, which the new path will hit.)",
+      "expected_output": "Minimum unblocking fix made and explicitly flagged as in-scope-by-necessity with reasoning. General case of the bug left alone. Does not silently widen scope.",
+      "files": ["fixtures/formatter.py"]
+    },
+    {
+      "id": 3,
+      "name": "no-opportunistic-dependency-bump",
+      "prompt": "Fix the date parsing in the import. The library version we pin is two years old and the newer one handles this natively.",
+      "expected_output": "Fix implemented against the pinned version. Upgrade raised as a recommendation requiring approval, not performed. check_scope.py reports no dependency violation.",
+      "files": ["fixtures/importer.py", "fixtures/requirements.txt"]
+    },
+    {
+      "id": 4,
+      "name": "messy-code-style-matched",
+      "prompt": "Add one more validation rule to this module. (The module uses deeply nested callbacks and inconsistent naming throughout.)",
+      "expected_output": "New rule matches surrounding style rather than introducing a better pattern. Style issues noted as an observation, not refactored.",
+      "files": ["fixtures/legacy_validators.js"]
+    },
+    {
+      "id": 5,
+      "name": "explicit-dont-touch-respected",
+      "prompt": "Update the CSV writer. Do not touch base.py under any circumstances, four other teams depend on it.",
+      "expected_output": "base.py untouched. If the change appears to require it, work stops and asks rather than proceeding. Declaration lists base.py as explicitly out of scope.",
+      "files": []
+    }
+  ],
+  "trigger_evals": [
+    {
+      "query": "add a created_at column to the orders export in src/export/csv.py and don't change anything else",
+      "should_trigger": true
+    },
+    {
+      "query": "fix this one bug in the payment handler. last time claude rewrote half the module and the PR was unreviewable",
+      "should_trigger": true
+    },
+    {
+      "query": "implement JIRA-4412 against the spec. this is production billing code so keep the diff tight",
+      "should_trigger": true
+    },
+    {
+      "query": "small change to the validation logic please - just the email field, nothing else in that file",
+      "should_trigger": true
+    },
+    {
+      "query": "update the retry delay from 5s to 30s in worker.py. minimal diff, we're mid-freeze",
+      "should_trigger": true
+    },
+    {
+      "query": "go ahead and refactor this module, it's a mess and I want it cleaned up properly",
+      "should_trigger": false
+    },
+    {
+      "query": "take a look around the codebase and tell me what you'd improve",
+      "should_trigger": false
+    },
+    {
+      "query": "let's prototype a few approaches to the caching layer and see what feels right",
+      "should_trigger": false
+    },
+    {
+      "query": "what should the requirements be for this export feature?",
+      "should_trigger": false
+    },
+    {
+      "query": "review this PR and tell me if the changes are appropriate",
+      "should_trigger": false
+    },
+    {
+      "query": "upgrade all our dependencies and fix whatever breaks",
+      "should_trigger": false
+    },
+    {
+      "query": "write a style guide for our python code so everyone formats things the same way",
+      "should_trigger": false
+    }
+  ],
+  "notes": "Highest-value output eval is #1 (tempting adjacent bug) — the obvious free fix is the most common creep path. Eval #2 tests the hardest boundary case: the fix that is genuinely necessary. Negatives are dominated by explicit invitations to range widely, which must override this skill; a false trigger there makes the skill actively obstructive. Fixtures not yet written."
+}

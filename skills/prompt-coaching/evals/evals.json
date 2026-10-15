@@ -1,0 +1,63 @@
+{
+  "skill_name": "prompt-coaching",
+  "version": "0.1.0",
+  "output_quality_evals": [
+    {
+      "id": 1,
+      "name": "grounded-in-actual-guesses",
+      "prompt": "Write up what we did on the export project.",
+      "expected_output": "Deliverable produced, then 2-4 coaching points naming actual guesses made (audience, format, depth). Each quotes the phrase, states the assumption, supplies the rewording. No generic advice.",
+      "files": []
+    },
+    {
+      "id": 2,
+      "name": "clear-request-no-coaching",
+      "prompt": "Add a function to src/parse.py called parse_iso_date that takes a string, returns a datetime in UTC, and raises ValueError on anything that isn't ISO-8601. Tests in tests/test_parse.py, pytest style, cover the error path.",
+      "expected_output": "No coaching section at all. The request determined every choice. Manufacturing feedback here teaches the user to skip it.",
+      "files": []
+    },
+    {
+      "id": 3,
+      "name": "blocking-ambiguity-asked-not-coached",
+      "prompt": "Migrate the user data over.",
+      "expected_output": "Asks during the work rather than guessing and coaching afterward. Coaching is for reasonable assumptions, not for questions that should have been raised.",
+      "files": []
+    },
+    {
+      "id": 4,
+      "name": "casual-request-proportionate",
+      "prompt": "can you tidy up this function a bit",
+      "expected_output": "Light touch or no coaching. Does not demand acceptance criteria for a small casual ask. Over-formalizing makes users write less, not more.",
+      "files": ["fixtures/messy_function.py"]
+    },
+    {
+      "id": 5,
+      "name": "recurring-pattern-raised-once",
+      "prompt": "[Fourth task in a sequence where audience was ambiguous each time] Draft the summary for this.",
+      "expected_output": "Raises the recurring pattern once, as a pattern, rather than repeating the per-task note a fourth time.",
+      "files": []
+    },
+    {
+      "id": 6,
+      "name": "user-declines-feedback",
+      "prompt": "[User previously said they don't want the prompt feedback] Write the migration script.",
+      "expected_output": "No coaching section. The preference is honored without negotiation or a reminder that it is available.",
+      "files": []
+    }
+  ],
+  "trigger_evals": [
+    {"query": "write up what we did on the export project", "should_trigger": true},
+    {"query": "that's not what i meant at all. why did you build it that way?", "should_trigger": true},
+    {"query": "we keep going back and forth on these - how could i be phrasing my asks better so you get it right first time", "should_trigger": true},
+    {"query": "make the dashboard better and let me know if my request was clear enough", "should_trigger": true},
+    {"query": "build the retry logic for the payment worker, then tell me where i was vague", "should_trigger": true},
+    {"query": "what's the best way to write prompts for claude generally? any guides?", "should_trigger": false},
+    {"query": "hey how's it going", "should_trigger": false},
+    {"query": "review this requirements doc and tell me which requirements are ambiguous", "should_trigger": false},
+    {"query": "what's 15% of 2400", "should_trigger": false},
+    {"query": "critique my writing style in this email draft", "should_trigger": false},
+    {"query": "add a created_at column to the orders table migration, postgres, default now()", "should_trigger": false},
+    {"query": "teach me prompt engineering techniques for our team training deck", "should_trigger": false}
+  ],
+  "notes": "Output evals #2, #4 and #6 are the restraint guards: coaching on a clear request, over-formalizing a casual one, or ignoring a stated preference all destroy the practice faster than missing a coaching opportunity. Eval #3 enforces the boundary that blocking ambiguity gets a question during the work, not feedback afterward. The near-miss negative worth watching is spec review, which is a different skill operating on the same vocabulary."
+}
