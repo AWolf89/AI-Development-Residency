@@ -1,0 +1,97 @@
+{
+  "skill_name": "requirements-elicitation",
+  "version": "0.1.0",
+  "output_quality_evals": [
+    {
+      "id": 1,
+      "name": "vague-one-liner-software-feature",
+      "prompt": "we need a way for customers to cancel their subscription themselves instead of emailing support. can you write up the requirements",
+      "expected_output": "Interview questions asked before any document. Should probe retention/win-back policy, refund handling, mid-cycle behavior, what the user sees after cancelling, and who approves. Document only after answers.",
+      "files": []
+    },
+    {
+      "id": 2,
+      "name": "data-pipeline-with-hidden-edge-cases",
+      "prompt": "Write requirements for a nightly job that pulls orders from our vendor's API into the warehouse. Vendor sends about 40k orders a day.",
+      "expected_output": "Depth calibrated to standard or deep. Must surface late/duplicate/out-of-order records, re-run safety, upstream outage behavior, schema drift, retention of personal data, and downstream consumers.",
+      "files": []
+    },
+    {
+      "id": 3,
+      "name": "trivial-ask-should-not-over-interview",
+      "prompt": "I need requirements for adding a 'last login' column to our internal admin user list. Nothing fancy.",
+      "expected_output": "Light tier declared. Three to five questions at most, then a short but complete document. Over-interviewing this is a failure.",
+      "files": []
+    },
+    {
+      "id": 4,
+      "name": "requester-cannot-answer",
+      "prompt": "Requirements for an internal tool that auto-approves expense reports under $50. I honestly don't know our audit rules, that's a finance thing.",
+      "expected_output": "Unanswered items recorded as open questions with named owners rather than invented. Assumptions section used explicitly. Side-effecting auto-approval flagged for confirmation design.",
+      "files": []
+    }
+  ],
+  "trigger_evals": [
+    {
+      "query": "we need a way for customers to cancel their subscription themselves instead of emailing support. can you write up the requirements",
+      "should_trigger": true
+    },
+    {
+      "query": "my PM gave me two sentences about a 'notifications revamp' and wants a spec by friday. help me turn it into something an engineer could actually build from",
+      "should_trigger": true
+    },
+    {
+      "query": "write user stories with acceptance criteria for the bulk CSV upload thing we discussed",
+      "should_trigger": true
+    },
+    {
+      "query": "Can you put together a PRD for a self-serve refund flow? Finance and Support both have opinions on it.",
+      "should_trigger": true
+    },
+    {
+      "query": "i want to automate our weekly vendor invoice reconciliation. where do i even start defining what it should do",
+      "should_trigger": true
+    },
+    {
+      "query": "we're building an integration with Workday for employee onboarding. need the requirements documented before the kickoff on the 20th",
+      "should_trigger": true
+    },
+    {
+      "query": "scope this out for me - a dashboard showing warehouse throughput by shift. no idea what the ops team actually needs yet",
+      "should_trigger": true
+    },
+    {
+      "query": "Here's our draft spec for the payments migration (attached). Can you review it and tell me what's ambiguous or untestable?",
+      "should_trigger": false
+    },
+    {
+      "query": "the requirements are signed off already - can you start building the CSV validator in python",
+      "should_trigger": false
+    },
+    {
+      "query": "estimate how long the subscription cancellation feature will take for a team of three",
+      "should_trigger": false
+    },
+    {
+      "query": "write me a project plan with milestones for Q1 based on the approved spec",
+      "should_trigger": false
+    },
+    {
+      "query": "what's the difference between functional and non-functional requirements?",
+      "should_trigger": false
+    },
+    {
+      "query": "turn these 40 requirements into Jira tickets with the right epics",
+      "should_trigger": false
+    },
+    {
+      "query": "our RFP response needs a requirements traceability matrix mapping their asks to our existing features",
+      "should_trigger": false
+    },
+    {
+      "query": "customer is complaining the export is slow, can you help me debug it",
+      "should_trigger": false
+    }
+  ],
+  "notes": "Triggering accuracy and output quality are tracked separately per the enterprise checklist. Trigger evals test the description field only; output-quality evals test the body, references, and template. Near-miss negatives above are review, implementation, estimation, planning, education, ticket-breakdown, traceability, and debugging — all adjacent domains that share vocabulary with this skill."
+}

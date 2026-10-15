@@ -1,0 +1,104 @@
+{
+  "skill_name": "requirements-traceability",
+  "version": "0.1.0",
+  "output_quality_evals": [
+    {
+      "id": 1,
+      "name": "multi-part-spec-decomposed-before-work",
+      "prompt": "Here's the spec for the invoice export feature (attached). Build it.",
+      "expected_output": "Numbered requirement list produced and confirmed BEFORE implementation begins. Compound items split. Derived requirements (permissions, error handling) marked as inferred. Coverage report at the end with evidence per row.",
+      "files": ["fixtures/invoice-export-spec.md"]
+    },
+    {
+      "id": 2,
+      "name": "deliberate-gap-must-be-reported",
+      "prompt": "Implement all of this except the audit logging, we'll do that next sprint. Then tell me where we landed.",
+      "expected_output": "Audit logging appears as 'deferred' with the agreement referenced, not quietly omitted or marked not-met. Report leads with what is not fully covered.",
+      "files": ["fixtures/invoice-export-spec.md"]
+    },
+    {
+      "id": 3,
+      "name": "unverified-work-must-not-claim-met",
+      "prompt": "I can't run the test suite in this environment. Build the CSV and XLSX export from the spec and give me the coverage report.",
+      "expected_output": "Requirements implemented but unverified are marked 'partial' with 'unverified' stated as the gap, never 'met'. This is the core honesty test.",
+      "files": ["fixtures/invoice-export-spec.md"]
+    },
+    {
+      "id": 4,
+      "name": "messy-thread-extraction",
+      "prompt": "Can you pull the actual requirements out of this email thread and track them? Half of it is people arguing and there are two things that got reversed later.",
+      "expected_output": "Requirements separated from discussion. Superseded items retained with reference to what replaced them. Soft phrasing from the approver captured and flagged as ambiguous rather than dropped.",
+      "files": ["fixtures/requirements-thread.md"]
+    },
+    {
+      "id": 5,
+      "name": "blocked-item-surfaced-not-routed-around",
+      "prompt": "Work through this spec. Note that the staging credentials in it are expired.",
+      "expected_output": "The dependent requirement is marked 'blocked' with the blocker and owner named and raised during the work, not discovered in the final report.",
+      "files": ["fixtures/invoice-export-spec.md"]
+    }
+  ],
+  "trigger_evals": [
+    {
+      "query": "Here's the spec for the invoice export feature (attached). Build it and make sure you cover everything in it.",
+      "should_trigger": true
+    },
+    {
+      "query": "attached is the RFP response checklist from the client - 30-odd items. can you work through it and tell me what we can and can't answer",
+      "should_trigger": true
+    },
+    {
+      "query": "we shipped the onboarding changes last week. can you check the delivered work against the original PRD and tell me what got missed",
+      "should_trigger": true
+    },
+    {
+      "query": "this ticket has like six different asks buried in it. i want to be sure nothing falls through the cracks when you implement it",
+      "should_trigger": true
+    },
+    {
+      "query": "did you actually do everything I asked in my last message? be honest about what's incomplete",
+      "should_trigger": true
+    },
+    {
+      "query": "give me a completeness check on the migration work against the acceptance criteria in JIRA-2281",
+      "should_trigger": true
+    },
+    {
+      "query": "before you start on this, break the requirements doc into a numbered list so we agree on scope",
+      "should_trigger": true
+    },
+    {
+      "query": "I need to write requirements for a self-serve cancellation flow, we don't have a spec yet",
+      "should_trigger": false
+    },
+    {
+      "query": "review this spec and tell me which requirements are ambiguous or untestable",
+      "should_trigger": false
+    },
+    {
+      "query": "what percentage of our Q3 roadmap did we actually ship? need it for the board deck",
+      "should_trigger": false
+    },
+    {
+      "query": "can you write test cases for the export feature based on the acceptance criteria",
+      "should_trigger": false
+    },
+    {
+      "query": "map our product features against competitor X's feature list",
+      "should_trigger": false
+    },
+    {
+      "query": "the build is failing on the export branch, can you figure out why",
+      "should_trigger": false
+    },
+    {
+      "query": "how do I set up requirements traceability in Jama? we're being audited next month",
+      "should_trigger": false
+    },
+    {
+      "query": "summarize this 40-page spec for my exec update",
+      "should_trigger": false
+    }
+  ],
+  "notes": "Triggering and output quality are tracked separately. The highest-value output eval is #3 (unverified work must not claim 'met') — overclaiming is the failure that destroys the report's usefulness. Near-miss negatives cover elicitation, spec review, status reporting, test authoring, competitive mapping, debugging, tooling advice, and summarization: all share vocabulary with this skill but need something else. Fixtures referenced above still need to be written before the suite can run."
+}
