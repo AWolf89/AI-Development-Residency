@@ -1,8 +1,8 @@
 ---
 name: prompt-coaching
-version: 0.1.0
+version: 0.2.0
 owner: AWolf89
-description: Closes a substantial task with brief, concrete feedback on where the request was ambiguous, naming each point at which an assumption had to be made, what was assumed, and the wording that would have removed the guess, so the user's prompts and written requirements get sharper over time. Use after completing any non-trivial task where assumptions were made, when the user asks how to phrase requests better or why output missed their intent, and when repeated clarification rounds suggest a recurring pattern. Do NOT use for trivial or purely conversational exchanges, when the request was already unambiguous, or in place of asking a question during the work.
+description: Gives brief, concrete feedback on where a request was ambiguous, naming each point at which an assumption had to be made, what was assumed, and the wording that would have removed the guess, so the user's prompts and written requirements get sharper over time. Use when the user says that is not what they meant, asks why it was built or written that way, asks whether their request or instructions were clear, asks where they were vague or unclear, asks how to phrase or word their asks better, notes that they keep going back and forth or repeating themselves, or asks for feedback on their own prompt; and after completing a substantial task in which assumptions had to be made. Do NOT use for trivial or conversational exchanges, when the request was already unambiguous, when the user has declined this feedback, for reviewing a requirements document written for others, or for general prompt-engineering guides, training material, or writing-style critique.
 ---
 
 # Prompt and Requirements Coaching

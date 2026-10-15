@@ -1,6 +1,6 @@
 {
   "skill_name": "concept-checkpoints",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "output_quality_evals": [
     {
       "id": 1,
@@ -39,18 +39,54 @@
     }
   ],
   "trigger_evals": [
-    {"query": "build the invoice edit page so two people editing at once don't clobber each other. i've never dealt with this kind of thing before", "should_trigger": true},
-    {"query": "can you add websockets to this? i'll be the one maintaining it so i want to actually understand what you're doing", "should_trigger": true},
-    {"query": "set up the auth flow with refresh tokens. i'm a frontend dev, backend security stuff isn't really my area", "should_trigger": true},
-    {"query": "walk me through building this queue consumer - i want to learn this properly not just paste it", "should_trigger": true},
-    {"query": "add database indexes to speed up the reports page. not sure what that actually does under the hood tbh", "should_trigger": true},
-    {"query": "explain how OAuth2 works, I'm studying for an interview", "should_trigger": false},
-    {"query": "implement the standard PKCE flow, we use it on three other services already, same pattern as the mobile app", "should_trigger": false},
-    {"query": "just give me the regex, no explanation needed", "should_trigger": false},
-    {"query": "production is down and the queue is backing up, fix it now", "should_trigger": false},
-    {"query": "write me a tutorial on react hooks for our junior devs", "should_trigger": false},
-    {"query": "what's the difference between a mutex and a semaphore?", "should_trigger": false},
-    {"query": "review my implementation of the retry logic and tell me what's wrong with it", "should_trigger": false}
+    {
+      "query": "build the invoice edit page so two people editing at once don't clobber each other. i've never dealt with this kind of thing before",
+      "should_trigger": true
+    },
+    {
+      "query": "can you add websockets to this? i'll be the one maintaining it so i want to actually understand what you're doing",
+      "should_trigger": true
+    },
+    {
+      "query": "set up the auth flow with refresh tokens. i'm a frontend dev, backend security stuff isn't really my area",
+      "should_trigger": true
+    },
+    {
+      "query": "walk me through building this queue consumer - i want to learn this properly not just paste it",
+      "should_trigger": true
+    },
+    {
+      "query": "add database indexes to speed up the reports page. not sure what that actually does under the hood tbh",
+      "should_trigger": true
+    },
+    {
+      "query": "explain how OAuth2 works, I'm studying for an interview",
+      "should_trigger": false
+    },
+    {
+      "query": "implement the standard PKCE flow, we use it on three other services already, same pattern as the mobile app",
+      "should_trigger": false
+    },
+    {
+      "query": "just give me the regex, no explanation needed",
+      "should_trigger": false
+    },
+    {
+      "query": "production is down and the queue is backing up, fix it now",
+      "should_trigger": false
+    },
+    {
+      "query": "write me a tutorial on react hooks for our junior devs",
+      "should_trigger": false
+    },
+    {
+      "query": "what's the difference between a mutex and a semaphore?",
+      "should_trigger": false
+    },
+    {
+      "query": "review my implementation of the retry logic and tell me what's wrong with it",
+      "should_trigger": false
+    }
   ],
-  "notes": "Output evals #2 and #3 are the over-trigger guards and matter as much as #1 — a checkpoint aimed at someone fluent or someone in a hurry is worse than none, because it trains the user to route around the practice. Negatives emphasize standalone teaching requests (no artifact being built) and demonstrated fluency, both of which share vocabulary with the trigger cases."
+  "notes": "Output evals #2 and #3 are the over-trigger guards and matter as much as #1 \u2014 a checkpoint aimed at someone fluent or someone in a hurry is worse than none, because it trains the user to route around the practice. Negatives emphasize standalone teaching requests (no artifact being built) and demonstrated fluency, both of which share vocabulary with the trigger cases."
 }

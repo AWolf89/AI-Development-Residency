@@ -2,6 +2,19 @@
 
 Semantic versioning: major for changed checkpoint behavior contracts, minor for new behavior, patch for fixes.
 
+## [0.2.0] — 2026-10-15
+
+### Changed
+- **Description rewritten around observable user phrasings.** Validation showed the 0.1.0
+  description shared almost no vocabulary with the prompts meant to trigger it (mean overlap
+  0.14): it described a conversation state ("when they will own the result") rather than
+  anything a user types. The rewrite leads with real phrasings — "new to", "not my area",
+  "never dealt with this", "not sure what it does", "want to understand", "walk me through",
+  "I'll be maintaining it" — and measured overlap rose to 0.25 with no near-zero positives.
+- Exclusions extended to name tutorial, interview-prep, and incident cases explicitly, since
+  those were the closest near-misses.
+- Minor version bump rather than patch: this changes when the skill fires, which is behavior.
+
 ## [0.1.0] — 2026-10-14
 
 Initial draft. Not yet released.
