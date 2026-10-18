@@ -1,8 +1,12 @@
 ---
 name: scope-discipline
-version: 0.1.0
-owner: AWolf89
 description: Keeps delivered work to exactly what was asked by declaring the file and change boundary before starting, refusing unrequested refactoring, renaming, dependency changes, reformatting, and extra features, and reporting anything noticed outside that boundary as an observation instead of acting on it. Use when implementing against a spec, ticket, or change request, when touching shared or production code, when the user says to change only a specific thing or not to touch anything else, and when a previous attempt did more than was wanted. Do NOT use when the user explicitly asks for a refactor, cleanup, or open-ended improvement, when exploring or prototyping where wandering is the point, or for deciding what the requirements should be.
+metadata:
+  author: AWolf89
+  owner: AWolf89
+  version: 0.2.0
+  category: engineering
+  tags: [scope, code-review]
 ---
 
 # Scope Discipline
@@ -95,3 +99,24 @@ scope statement so they can verify the diff matches it at a glance.
 
 If they say "while you're in there, also…", that is a new boundary, not permission to
 freelance. Update the declaration, state the new boundary, and keep working the same way.
+
+## Examples
+
+**Example — a focused bug fix**
+User: "Fix the off-by-one in `csv.py`, don't touch anything else."
+Actions: declare the boundary to `scope.json`; make the minimal change; note the unrelated missing-index issue as an observation instead of fixing it; run `check_scope.py scope.json`; hand over leading with the scope statement.
+Result: a one-line diff the reviewer can approve at a glance, plus a pointer to what else you saw.
+
+## Troubleshooting
+
+**`check_scope.py` flags a file you changed casually.**
+Cause: a file opened early and edited out of habit, outside the declaration.
+Fix: revert it, or declare it explicitly and confirm with the user — don't let the diff grow past what was approved.
+
+**Your change genuinely needs a file outside the boundary.**
+Cause: a real dependency the declaration didn't anticipate.
+Fix: stop and say so with specifics; widen the boundary with the user's agreement before continuing, never silently.
+
+**The formatter rewrote the whole file on save.**
+Cause: editor auto-format touched lines you didn't mean to change.
+Fix: restore the unrelated lines so the diff shows only your targeted edit; see `references/boundary-cases.md`.

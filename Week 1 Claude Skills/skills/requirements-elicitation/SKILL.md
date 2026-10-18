@@ -1,8 +1,12 @@
 ---
 name: requirements-elicitation
-version: 0.1.0
-owner: AWolf89
 description: Produces a numbered requirements document with acceptance criteria by interviewing the requester first about users, the underlying problem, scope boundaries, success measures, and edge cases. Use when the user asks to write requirements, a spec, a PRD, user stories, acceptance criteria, or a scoping document, and also when they describe a feature, integration, pipeline, or automation they want built but have not said who it is for, what is explicitly out of scope, or how success will be measured. Do NOT use for reviewing or critiquing requirements that are already written, for implementing or estimating work once requirements are agreed, or for project plans, roadmaps, and status documents.
+metadata:
+  author: AWolf89
+  owner: AWolf89
+  version: 0.2.0
+  category: product
+  tags: [requirements, specs, planning]
 ---
 
 # Requirements Elicitation
@@ -106,6 +110,37 @@ note why a flag is acceptable; do not hand over a document with unreviewed findi
 
 Close by telling the requester what to check first — usually the assumptions and open
 questions, since those are where their knowledge beats yours.
+
+## Examples
+
+**Example — a vague feature request**
+User says: "We need a dashboard for the support team."
+Actions:
+1. Calibrate: multiple users, real data → Standard tier; say so.
+2. Interview in one batch: who on the team, what decision it drives, what data, refresh frequency, what "done" looks like, what's explicitly out.
+3. Play back the problem and boundary; confirm.
+4. Write the numbered doc from `templates/requirements-doc.md` with stable IDs and Given/When/Then criteria.
+5. Run the validator; fix flags; hand off pointing at Assumptions and Open questions.
+Result: a testable spec instead of a one-liner that would have been built wrong.
+
+**Example — an ask that needs no deep interview**
+User says: "Add a 'copy link' button to the share dialog."
+Actions: Light tier (one component, reversible); 3–4 questions (placement, what it copies, success toast?); confirm; short doc.
+Result: right-sized — no over-interviewing a trivial change.
+
+## Troubleshooting
+
+**The requester gets impatient with questions.**
+Cause: tier too deep for the ask, or questions asked one at a time.
+Fix: drop a tier, batch all questions into one message, and propose assumptions ("I'll assume X unless you say otherwise") instead of open questions.
+
+**`validate_requirements.py` flags a requirement as compound.**
+Cause: one requirement contains two independently testable asks.
+Fix: split it into two IDs — compound requirements are where silent partial delivery hides.
+
+**The requester can't answer a question.**
+Cause: the answer isn't known yet — that's a finding, not a blocker.
+Fix: record it under Open questions with a named owner; never quietly fill the gap with an assumption.
 
 ## Where this skill stops
 

@@ -32,6 +32,28 @@ def frontmatter(text: str) -> dict:
     return out
 
 
+def metadata_block(text: str) -> dict:
+    """Parse the indented key: value pairs under a `metadata:` line in frontmatter."""
+    m = re.match(r"^---\n(.*?)\n---\n", text, re.S)
+    if not m:
+        return {}
+    out: dict = {}
+    in_meta = False
+    for line in m.group(1).splitlines():
+        if re.match(r"^metadata:\s*$", line):
+            in_meta = True
+            continue
+        if in_meta:
+            if line.startswith((" ", "\t")) and ":" in line:
+                k, v = line.split(":", 1)
+                out[k.strip()] = v.strip()
+            elif line.strip() == "":
+                continue
+            else:
+                in_meta = False
+    return out
+
+
 def audit(d: Path) -> list[tuple[str, str, str]]:
     """Return (level, check, message) for each failure."""
     f: list[tuple[str, str, str]] = []
@@ -42,6 +64,7 @@ def audit(d: Path) -> list[tuple[str, str, str]]:
 
     text = skill_md.read_text(encoding="utf-8")
     fm = frontmatter(text)
+    meta = metadata_block(text)
     body = text.split("---", 2)[-1]
     desc = fm.get("description", "")
 
@@ -50,9 +73,9 @@ def audit(d: Path) -> list[tuple[str, str, str]]:
         f.append((MUST, "frontmatter", "no name"))
     if fm.get("name") and fm["name"] != d.name:
         f.append((SHOULD, "frontmatter", f"name '{fm['name']}' != folder '{d.name}'"))
-    owner = fm.get("owner", "")
+    owner = fm.get("owner") or meta.get("owner") or meta.get("author") or ""
     if not owner:
-        f.append((MUST, "ownership", "no owner field"))
+        f.append((MUST, "ownership", "no owner/author in frontmatter or metadata"))
     elif owner.upper().startswith("TBD"):
         f.append((MUST, "ownership", "owner is TBD — merge blocker"))
 
@@ -104,10 +127,11 @@ def audit(d: Path) -> list[tuple[str, str, str]]:
             f.append((MUST, "determinism", f"{s.name}: --help failed (not independently runnable)"))
 
     # §4 governance
-    if not fm.get("version"):
-        f.append((MUST, "governance", "no version in frontmatter"))
-    elif not re.match(r"^\d+\.\d+\.\d+$", fm["version"]):
-        f.append((MUST, "governance", f"version '{fm['version']}' is not semantic"))
+    ver = fm.get("version") or meta.get("version")
+    if not ver:
+        f.append((MUST, "governance", "no version in frontmatter or metadata"))
+    elif not re.match(r"^\d+\.\d+\.\d+$", ver):
+        f.append((MUST, "governance", f"version '{ver}' is not semantic"))
     if not (d / "CHANGELOG.md").is_file():
         f.append((MUST, "governance", "no CHANGELOG.md"))
     for s in scripts:
@@ -139,7 +163,7 @@ def audit(d: Path) -> list[tuple[str, str, str]]:
             f.append((SHOULD, "evals", f"only {len(neg)} negative cases"))
         if len(pos) < 3:
             f.append((SHOULD, "evals", f"only {len(pos)} positive cases"))
-        if data.get("version") and data["version"] != fm.get("version"):
+        if data.get("version") and data["version"] != (fm.get("version") or meta.get("version")):
             f.append((SHOULD, "evals", "eval version does not match skill version"))
     return f
 

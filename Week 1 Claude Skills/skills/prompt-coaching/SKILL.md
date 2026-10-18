@@ -1,8 +1,12 @@
 ---
 name: prompt-coaching
-version: 0.2.0
-owner: AWolf89
 description: Gives brief, concrete feedback on where a request was ambiguous, naming each point at which an assumption had to be made, what was assumed, and the wording that would have removed the guess, so the user's prompts and written requirements get sharper over time. Use when the user says that is not what they meant, asks why it was built or written that way, asks whether their request or instructions were clear, asks where they were vague or unclear, asks how to phrase or word their asks better, notes that they keep going back and forth or repeating themselves, or asks for feedback on their own prompt; and after completing a substantial task in which assumptions had to be made. Do NOT use for trivial or conversational exchanges, when the request was already unambiguous, when the user has declined this feedback, for reviewing a requirements document written for others, or for general prompt-engineering guides, training material, or writing-style critique.
+metadata:
+  author: AWolf89
+  owner: AWolf89
+  version: 0.3.0
+  category: communication
+  tags: [feedback, prompting]
 ---
 
 # Prompt and Requirements Coaching
@@ -91,6 +95,20 @@ raise it once as a pattern rather than repeating the per-task note:
 
 Raise a pattern at most once every several tasks. The point is a sharper collaborator, not a
 running critique.
+
+## Troubleshooting
+
+**The feedback feels like generic advice.**
+Cause: it isn't grounded in a guess actually made this task.
+Fix: tie each point to the exact phrase and the assumption it forced; drop anything you can't anchor to a real moment.
+
+**The user reads the note as criticism.**
+Cause: too many points, or wording that implies the request was bad.
+Fix: cap at two to four, own the guess ("I assumed X"), and lead with what was clear.
+
+**You're about to give feedback on a trivial exchange.**
+Cause: coaching fired where nothing was genuinely ambiguous.
+Fix: say nothing — a note on every task trains the user to skip it.
 
 ## What this is not
 

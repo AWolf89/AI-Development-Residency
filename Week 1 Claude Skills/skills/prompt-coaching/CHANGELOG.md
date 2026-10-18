@@ -2,6 +2,14 @@
 
 Semantic versioning: major for a changed log-file contract, minor for new behavior, patch for fixes.
 
+## [0.3.0] — 2026-10-17
+
+### Added
+- Troubleshooting section in `SKILL.md`.
+
+### Changed
+- Aligned with Anthropic's "Complete Guide to Building Skills": moved version and owner into a `metadata` block (author, owner, version, category, tags) and reviewed the instruction body against the guide's structure.
+
 ## [0.2.0] — 2026-10-15
 
 ### Changed

@@ -1,8 +1,12 @@
 ---
 name: learning-summaries
-version: 0.1.0
-owner: AWolf89
 description: Writes a learning summary of a conversation and pushes it as a new row-page in the user's Notion "Lesson Summaries" database, with summary name, date, and topics covered, scaled in depth to how far the topic was explored. Use at the end of any substantial conversation in which the user investigated, explored, studied, or learned something; when the user says "summarize what we learned", "create a summary", "save this to Notion", "add this to my lesson summaries", or taps a Create summary option; and when a conversation is winding down after explaining concepts, debugging with explanation, or building something new together. Do NOT use for short factual questions, casual chat, conversations the user has said not to summarize, summaries of documents or meetings the user supplies, or course submissions that must be written without AI.
+metadata:
+  author: AWolf89
+  owner: AWolf89
+  version: 0.2.0
+  category: productivity
+  tags: [notion, summaries, knowledge-management]
 ---
 
 # Learning Summaries

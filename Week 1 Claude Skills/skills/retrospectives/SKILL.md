@@ -1,8 +1,12 @@
 ---
 name: retrospectives
-version: 0.1.0
-owner: AWolf89
 description: Closes out a piece of work with a short retrospective covering what worked, what needed correcting and why, and what should change next time, then logs each correction so that one recurring a second time is proposed in writing as a new rule for a named skill, awaiting approval before any skill file is edited. Use after work that required real correction, rework, or a change of direction, when the user asks what we learned or what should change, and when deciding whether a repeated correction belongs in a skill. Do NOT use after work that went cleanly, for production incident postmortems, for coverage or completeness reporting on requirements, or for feedback on how the user phrased their request.
+metadata:
+  author: AWolf89
+  owner: AWolf89
+  version: 0.2.0
+  category: process
+  tags: [retrospective, continuous-improvement]
 ---
 
 # Retrospectives and Lessons Learned
@@ -108,3 +112,25 @@ original incident.
 
 A library of twenty sharp rules outperforms one of two hundred, and every rule added is one
 more thing that can misfire.
+
+## Examples
+
+**Example — a correction worth logging**
+After a task where the user twice had to say "don't touch files I didn't ask about":
+Actions: run the four-section retro; log the correction with its cause (`--cause "widened scope without asking"`); `--report` shows it's now at two occurrences; apply the generalization test; if it passes, propose a rule for `scope-discipline` in the written shape, then stop.
+Result: a recurring correction becomes a proposed rule awaiting approval — not a silent edit.
+
+**Example — a one-off that should NOT become a rule**
+A correction happened once, in an unusual situation.
+Actions: log it, note it fails the generalization test, propose nothing.
+Result: the library stays sharp; no narrow rule that misfires on the next task.
+
+## Troubleshooting
+
+**Every task is generating "lessons."**
+Cause: normal iteration is being logged as correction.
+Fix: apply `references/correction-taxonomy.md` — only real corrections (rework, wrong direction, costly misunderstanding) count.
+
+**A proposed rule keeps getting declined.**
+Cause: it's too narrow, or the real fix is elsewhere (e.g. how requirements are written).
+Fix: log the decline, don't re-propose, and let the cause keep accumulating if it genuinely recurs.

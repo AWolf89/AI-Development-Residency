@@ -3,6 +3,11 @@
 Semantic versioning: major for a changed Notion schema or page contract, minor for new
 behavior, patch for fixes.
 
+## [0.2.0] — 2026-10-17
+
+### Changed
+- Aligned with Anthropic's "Complete Guide to Building Skills": moved version and owner into a `metadata` block (author, owner, version, category, tags) and reviewed the instruction body against the guide's structure.
+
 ## [0.1.0] — 2026-10-15
 
 Initial draft. Not yet released.

@@ -1,8 +1,12 @@
 ---
 name: concept-checkpoints
-version: 0.2.0
-owner: AWolf89
 description: Explains the concept underneath the code while building it, pausing to check understanding before that concept becomes load-bearing, so the user can maintain and debug the result rather than only possess it. Use when the user says they are new to something, that it is outside their usual area, that they have never dealt with this before, or that they are not sure what something does; when they ask to understand it, learn it properly, be walked through it, or say they do not want to just paste it; when they mention they will be the one maintaining, reviewing, or supporting the code; and when a pattern, library, protocol, or architectural choice they have not shown familiarity with is about to be introduced. Do NOT use when the user has already demonstrated fluency with the concept, when they ask for output only, say they are in a hurry, or are handling an incident, or for standalone teaching, tutorial, or interview-prep requests where no artifact is being built.
+metadata:
+  author: AWolf89
+  owner: AWolf89
+  version: 0.3.0
+  category: education
+  tags: [teaching, onboarding, code-comprehension]
 ---
 
 # Concept Checkpoints

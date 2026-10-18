@@ -1,8 +1,12 @@
 ---
 name: requirements-traceability
-version: 0.1.0
-owner: AWolf89
 description: Decomposes a spec, ticket, or multi-part request into numbered requirements before work starts, maps each piece of delivered output back to them during the work, and closes with a coverage report marking every requirement met, partially met, or not addressed with evidence and an explanation for anything incomplete. Use when the user hands over a spec, PRD, requirements document, acceptance criteria, RFP, ticket, or any request with several distinct asks and expects all of it covered, and whenever they ask whether everything was done, what was missed, or for a coverage or completeness check of delivered work. Do NOT use for eliciting or writing requirements that do not exist yet, for reviewing a spec's quality or ambiguity, or for project status reporting, estimation, and roadmaps.
+metadata:
+  author: AWolf89
+  owner: AWolf89
+  version: 0.2.0
+  category: product
+  tags: [requirements, coverage, qa]
 ---
 
 # Requirements Traceability
@@ -100,6 +104,31 @@ longer trust any of them.
 Lead the report with what is **not** fully covered. A reader scanning a wall of green ticks
 will not find the one amber row halfway down, and the point of the exercise is to make
 omissions impossible to miss.
+
+## Examples
+
+**Example — a multi-part ticket**
+User hands over a ticket with 8 bullet points.
+Actions:
+1. `python3 scripts/extract_requirements.py <ticket> --out trace.json`; correct the draft list; mark inferred items.
+2. Show "11 requirements, 3 inferred — confirm before I start."
+3. Map evidence (file/function, test name) into `trace.json` as each piece is delivered.
+4. `python3 scripts/check_coverage.py trace.json`; write the report from the template, leading with what's not fully covered.
+Result: every bullet is accounted for, with evidence — including the two that turned out blocked.
+
+## Troubleshooting
+
+**`check_coverage.py` reports an invented ID.**
+Cause: a requirement ID in the report doesn't exist in the source list.
+Fix: remove it or trace it to the real source ID; the report must map 1:1 to the agreed list.
+
+**Everything is marked `met`, but some of it was never run.**
+Cause: `met` is being used for "written," not "verified."
+Fix: downgrade unverified items to `partial` with the gap stated. One false `met` makes a reader distrust all of them.
+
+**A requirement became impossible mid-work.**
+Cause: a conflict or missing dependency surfaced after starting.
+Fix: mark it `blocked` with the reason and who can clear it, and raise it — don't route around it silently.
 
 ## Composing with other skills
 
