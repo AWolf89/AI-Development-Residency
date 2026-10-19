@@ -35,4 +35,14 @@ copies drift independently — keep shared lines in sync by hand.
 
 - This is the `AI-Development-Residency` repo. The Week 1 skills live in `Week 1 Claude Skills/skills/`; the checklist is `Week 1 Claude Skills/ENTERPRISE_SKILL_CHECKLIST.md`; tooling is in `Week 1 Claude Skills/tools/`.
 - Before committing any change to a skill, run `python tools/audit_skills.py <skill-dir>` from inside `Week 1 Claude Skills/` and make sure it passes (0 must failures).
+
+## Git in this repo
+
+Follow the `git-workflow` skill (`Week 1 Claude Skills/skills/git-workflow/`) for all git work here:
+
+- **Never commit or push to `main`.** Work on a feature branch named `type/short-description` (e.g. `feat/...`, `fix/...`, `docs/...`, `chore/...`) and bring changes into `main` through a pull request. Run the skill's `preflight.sh` before the first change; validate names with `check_names.py`.
+- **One Conventional Commit per feature** (`feat(scope): ...`, `fix: ...`, `docs: ...`). Stage only the files for this change — never `git add .` blindly; review `git status` first.
+- **Ask before** opening a PR, merging, resolving a conflict, or deleting a branch. Pushing a feature branch is fine without asking.
+- **Explain each new git command** in plain language (I'm learning git).
+- `gh` (GitHub CLI) is **not installed** here — when a PR is needed, use the app's PR flow or give me the exact commands/GitHub-web steps to do it myself.
 - Commit and push only when I ask.
