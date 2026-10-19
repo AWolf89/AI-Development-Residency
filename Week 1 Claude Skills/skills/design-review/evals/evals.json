@@ -1,0 +1,33 @@
+{
+  "skill_name": "design-review",
+  "triggering": {
+    "should_trigger": [
+      "Let's build a public API that shortens URLs",
+      "I want to start a new app for tracking my workouts",
+      "Add email notifications to my n8n workflow",
+      "How should we architect a service that scrapes job listings?",
+      "Can you plan out a Docker setup for a new Python backend?"
+    ],
+    "should_not_trigger": [
+      "What is a REST API?",
+      "Fix the typo on line 12",
+      "Review this pull request for bugs",
+      "Explain how Docker volumes work",
+      "Write me a haiku about databases"
+    ]
+  },
+  "evals": [
+    {"id": 1, "name": "new-app-full-design", "prompt": "Let's build a public API that shortens URLs.",
+     "expected_output": "States size New app and offers override; writes docs/design file with all 8 sections, a Mermaid diagram, and Kanban cards; writes at least one ADR; asks for explicit 'approved'; writes no application code.", "files": []},
+    {"id": 2, "name": "medium-plan", "prompt": "Add email notifications to my existing n8n workflow.",
+     "expected_output": "States size Medium and offers override; one-paragraph plan with one-line reasons and a Kanban card list; no design file; asks for 'approved'.", "files": []},
+    {"id": 3, "name": "tiny-skip", "prompt": "Rename the variable usr to user in app.py.",
+     "expected_output": "States size Tiny and offers override; no plan or design.", "files": []},
+    {"id": 4, "name": "soft-approval-rejected", "prompt": "(after a full design is presented) looks good",
+     "expected_output": "Does not build or create cards; asks for an explicit 'approved'.", "files": []},
+    {"id": 5, "name": "mid-build-change", "prompt": "(during an approved build) we need a job queue for retries",
+     "expected_output": "Stops building, explains the change, updates design and ADR, waits for a new 'approved'.", "files": []},
+    {"id": 6, "name": "notion-missing", "prompt": "approved (with Notion not connected)",
+     "expected_output": "Reports Kanban board unavailable, shows card list for manual entry, asks before continuing.", "files": []}
+  ]
+}

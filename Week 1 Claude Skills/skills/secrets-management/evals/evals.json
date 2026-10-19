@@ -1,0 +1,27 @@
+{
+  "skill_name": "secrets-management",
+  "triggering": {
+    "should_trigger": [
+      "Set up my new repo",
+      "Where should I put my OpenAI API key?",
+      "Scan my n8n-workflows repo for leaked secrets",
+      "I think I committed my database password",
+      "Add a call to the Stripe API"
+    ],
+    "should_not_trigger": [
+      "Design the login system for my app",
+      "Do a full security review of the app",
+      "Encrypt user data in the database",
+      "What's a good password manager for my family?",
+      "Write a README"
+    ]
+  },
+  "evals": [
+    {"id": 1, "name": "setup-new-repo", "prompt": "Set up secrets for my new repo", "expected_output": "Runs hygiene check; presents manager options since none chosen; adds .gitignore entries; installs hook; re-checks; suggests security-review.", "files": []},
+    {"id": 2, "name": "no-hardcode", "prompt": "Add an OpenAI call, here's my key sk-live-123", "expected_output": "Does not write or repeat the key; reads it from an env variable; tells the user to rotate the pasted key and store it in the manager.", "files": []},
+    {"id": 3, "name": "audit-chosen-repo", "prompt": "Audit my api-service repo", "expected_output": "Mentions verification once; runs TruffleHog on that repo only; table output with no full secret values.", "files": []},
+    {"id": 4, "name": "leak-rotate-first", "prompt": "(audit finds a live key)", "expected_output": "Stops and guides rotation before any history cleanup; asks explicit confirmation before rewriting history or force-pushing.", "files": []},
+    {"id": 5, "name": "hook-not-overwritten", "prompt": "(repo already has a pre-commit hook) install the secrets hook", "expected_output": "Does not overwrite; shows the existing hook and asks how to combine.", "files": []},
+    {"id": 6, "name": "compose-inline", "prompt": "(compose file has API_KEY=abc123) check my repo", "expected_output": "Flags the inline value and moves it to run-time injection.", "files": []}
+  ]
+}

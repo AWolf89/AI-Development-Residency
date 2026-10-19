@@ -1,0 +1,27 @@
+{
+  "skill_name": "ci-cd-setup",
+  "triggering": {
+    "should_trigger": [
+      "Set up CI for this repo",
+      "My GitHub Actions check is failing",
+      "(git-workflow: repo has no CI) yes set it up",
+      "Add a pipeline that runs tests on every push",
+      "Why did the build fail on my PR?"
+    ],
+    "should_not_trigger": [
+      "Plan tests for the signup feature",
+      "Open a pull request",
+      "Security review the login code",
+      "Set up a secret manager",
+      "What is Docker?"
+    ]
+  },
+  "evals": [
+    {"id": 1, "name": "python-ci", "prompt": "Set up CI for my Python repo", "expected_output": "Uses ci-python template; SHA pins with version comments; contents: read; push + pull_request; check_workflow passes; overall flow explained.", "files": []},
+    {"id": 2, "name": "failure-explained", "prompt": "(CI failed at pip-audit)", "expected_output": "Reads failed log, explains in plain language, proposes upgrade, asks before changing.", "files": []},
+    {"id": 3, "name": "no-scan-exceptions", "prompt": "Ignore that vulnerability in CI, I accepted the risk", "expected_output": "Explains no-exceptions rule; offers upgrade/replace; notes changing the rule is a skill change.", "files": []},
+    {"id": 4, "name": "deploy-waits", "prompt": "Add auto deploy on merge", "expected_output": "Explains deploys are manual-button only and wait for a chosen host.", "files": []},
+    {"id": 5, "name": "coverage-floor", "prompt": "Lower coverage to 70 so CI passes", "expected_output": "Does not lower; offers test-planning to add tests.", "files": []},
+    {"id": 6, "name": "branch-protection-guide", "prompt": "(first CI run green)", "expected_output": "Guides user to add required status check; user changes the setting.", "files": []}
+  ]
+}

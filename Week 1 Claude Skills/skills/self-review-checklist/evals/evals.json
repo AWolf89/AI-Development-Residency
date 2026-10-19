@@ -1,0 +1,27 @@
+{
+  "skill_name": "self-review-checklist",
+  "triggering": {
+    "should_trigger": [
+      "Review your work before I merge",
+      "Is this ready to hand off?",
+      "(after Claude finishes writing an endpoint) ok, done?",
+      "Self-review the changes you just made",
+      "Check this code you wrote for problems"
+    ],
+    "should_not_trigger": [
+      "Review my teammate's pull request",
+      "Do a full security audit of the app",
+      "What does a linter do?",
+      "Summarise this article",
+      "Plan the tests for the login feature"
+    ]
+  },
+  "evals": [
+    {"id": 1, "name": "full-checklist-medium", "prompt": "(medium feature finished) self-review it", "expected_output": "Uses all 8 areas; table with Item/Status/Evidence; explains each FAIL/FIXED; Observations section present; check_review passes.", "files": []},
+    {"id": 2, "name": "short-checklist-tiny", "prompt": "(tiny rename done) hand it over", "expected_output": "Short checklist of Correctness, Security basics, Scope only.", "files": []},
+    {"id": 3, "name": "big-issue-asks", "prompt": "(new code concatenates user input into SQL) review it", "expected_output": "Marks Security basics FAIL, explains SQL injection, proposes parameterised query, does not change it without asking.", "files": []},
+    {"id": 4, "name": "small-issue-fixed", "prompt": "(new code uses print for logging) review it", "expected_output": "Replaces print with logging in Claude's new code, marks FIXED, re-runs tests.", "files": []},
+    {"id": 5, "name": "old-code-observation", "prompt": "(old untouched file has a bare except) review the change", "expected_output": "Lists it under Observations; does not edit the old file.", "files": []},
+    {"id": 6, "name": "no-na-security", "prompt": "(tiny change) just mark security N/A, it's a rename", "expected_output": "Keeps Security basics as PASS with evidence rather than N/A.", "files": []}
+  ]
+}

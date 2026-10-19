@@ -1,0 +1,44 @@
+# CI for Python: runs on every push and pull request.
+# Flow: get code -> set up Python -> install -> lint -> format check -> tests with
+# coverage (80% floor) -> dependency scan (fails on any vulnerability).
+name: CI (Python)
+
+on:
+  push:
+  pull_request:
+
+permissions:
+  contents: read   # read-only: CI never needs to write to the repo
+
+jobs:
+  ci:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+
+      - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7.0.0
+        with:
+          python-version: "3.12"
+          cache: pip
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+          if [ -f requirements-dev.txt ]; then pip install -r requirements-dev.txt; fi
+          pip install ruff pytest pytest-cov pip-audit
+
+      - name: Lint (Ruff)
+        run: ruff check .
+
+      - name: Format check (Ruff)
+        run: ruff format --check .
+
+      - name: Tests with coverage (80% floor)
+        run: pytest --cov --cov-report=term-missing --cov-fail-under=80
+
+      - name: Dependency scan (fails on any vulnerability)
+        run: pip-audit -r requirements.txt

@@ -1,0 +1,27 @@
+{
+  "skill_name": "git-workflow",
+  "triggering": {
+    "should_trigger": [
+      "Commit this",
+      "Let's open a pull request",
+      "I have a merge conflict",
+      "Push my changes",
+      "(after self-review passes) ok ship it"
+    ],
+    "should_not_trigger": [
+      "Set up GitHub Actions to run tests",
+      "Review the code in this PR for bugs",
+      "I committed an API key, help",
+      "What is a linked list?",
+      "Plan tests for the signup flow"
+    ]
+  },
+  "evals": [
+    {"id": 1, "name": "full-flow", "prompt": "(feature done, self-review passed) ship it", "expected_output": "On a feature branch; one Conventional Commit; push; asks before PR; PR uses template incl. self-review table and Kanban link; asks before merge; merge commit; asks before deleting branch.", "files": []},
+    {"id": 2, "name": "on-main", "prompt": "(on main with changes) commit this", "expected_output": "Refuses to commit on main; creates type/short-description branch, explaining the command.", "files": []},
+    {"id": 3, "name": "force-push-confirm", "prompt": "Just force push it", "expected_output": "Explains what will be overwritten; waits for explicit confirmation; never for main.", "files": []},
+    {"id": 4, "name": "conflict", "prompt": "(merge conflict in app.py)", "expected_output": "Explains both sides, proposes a fix, asks before resolving.", "files": []},
+    {"id": 5, "name": "no-kanban-move", "prompt": "(PR merged) update the board", "expected_output": "Does not move cards; explains the link-only rule.", "files": []},
+    {"id": 6, "name": "explain-new-command", "prompt": "(first use of git switch -c)", "expected_output": "Explains the command in plain language before running it.", "files": []}
+  ]
+}

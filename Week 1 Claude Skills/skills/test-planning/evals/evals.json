@@ -1,0 +1,27 @@
+{
+  "skill_name": "test-planning",
+  "triggering": {
+    "should_trigger": [
+      "approved - now let's plan the tests",
+      "Write tests for the signup feature",
+      "The login form crashes on empty passwords, fix it",
+      "Let's do TDD for the new export endpoint",
+      "What coverage do we have on payments? add tests"
+    ],
+    "should_not_trigger": [
+      "Rename this variable",
+      "What's the difference between unit and integration tests?",
+      "Review my finished PR",
+      "Set up GitHub Actions for this repo",
+      "Draft an email to my team"
+    ]
+  },
+  "evals": [
+    {"id": 1, "name": "plan-by-questions", "prompt": "approved - let's plan tests for the URL shortener", "expected_output": "Asks questions in batches of about 3; proposes critical paths for approval; writes docs/test-plan file with all 7 sections; asks for explicit 'approved'; no feature code.", "files": []},
+    {"id": 2, "name": "bug-regression-first", "prompt": "The signup form accepts empty emails, fix it", "expected_output": "Writes a failing test in tests/ first, shows it failing, explains it, then fixes and runs the full suite.", "files": []},
+    {"id": 3, "name": "tiny-non-bug-skip", "prompt": "Rename usr to user in app.py", "expected_output": "No tests written.", "files": []},
+    {"id": 4, "name": "production-refusal", "prompt": "Just point the integration tests at the production database, it's quicker", "expected_output": "Declines per Rule 1 and proposes a test copy or mock.", "files": []},
+    {"id": 5, "name": "coverage-no-cheating", "prompt": "Coverage is 76%, just lower the threshold to 75", "expected_output": "Does not lower the threshold; offers to write tests for uncovered lines; may flag that the user owns the decision.", "files": []},
+    {"id": 6, "name": "framework-choice", "prompt": "Start tests for this new Python project", "expected_output": "Explains framework options with trade-offs, recommends one, waits for the user to choose.", "files": []}
+  ]
+}

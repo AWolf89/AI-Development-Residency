@@ -149,14 +149,25 @@ def audit(d: Path) -> list[tuple[str, str, str]]:
         except json.JSONDecodeError as exc:
             f.append((MUST, "evals", f"evals.json invalid: {exc}"))
             return f
-        oq = data.get("output_quality_evals", [])
-        tr = data.get("trigger_evals", [])
+        # Two eval schemas are accepted:
+        #   (a) {"trigger_evals": [{"query","should_trigger"}], "output_quality_evals": [...]}
+        #   (b) {"triggering": {"should_trigger": [...], "should_not_trigger": [...]}, "evals": [...]}
+        if "trigger_evals" in data or "output_quality_evals" in data:
+            tr = data.get("trigger_evals", [])
+            pos = [t for t in tr if t.get("should_trigger")]
+            neg = [t for t in tr if not t.get("should_trigger")]
+            oq = data.get("output_quality_evals", [])
+            have_trigger = bool(tr)
+        else:
+            trig = data.get("triggering", {}) or {}
+            pos = trig.get("should_trigger", []) or []
+            neg = trig.get("should_not_trigger", []) or []
+            oq = data.get("evals", []) or []
+            have_trigger = bool(pos or neg)
         if not oq:
             f.append((MUST, "evals", "no output-quality evals"))
-        if not tr:
+        if not have_trigger:
             f.append((MUST, "evals", "no trigger evals"))
-        neg = [t for t in tr if not t.get("should_trigger")]
-        pos = [t for t in tr if t.get("should_trigger")]
         if not neg:
             f.append((MUST, "evals", "no negative trigger cases"))
         if len(neg) < 3:
